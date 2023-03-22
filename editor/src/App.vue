@@ -1,9 +1,9 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Canvas from './components/canvas.vue'
 </script>
 
 <template>
-  <HelloWorld msg="Vite + Vue" />
+  <Canvas />
 </template>
 
 <style scoped>
