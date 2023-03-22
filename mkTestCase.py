@@ -86,7 +86,7 @@ class Factory:
         for row in self.rows:
             ws.append(row)
 
-        wb.save("/Users/yangqing/Documents/普通商密/自动化测试跟踪表示例/aaa.xlsx")
+        wb.save("/Users/xxx/Documents/普通商密/自动化测试跟踪表示例/aaa.xlsx")
 
 
 if __name__ == '__main__':
