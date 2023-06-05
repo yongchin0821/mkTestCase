@@ -3,11 +3,14 @@
 # @Time    : 2023/3/6 10:59 AM
 # @Author  : Yongchin
 
-from openpyxl import Workbook, load_workbook
+from mkTestCase import Factory
 
 if __name__ == '__main__':
-    wb = Workbook()
-    ws = wb.active
-    # ws.cell(i + 3, 15, data)
-    # 保存
-    wb.save("/Users/xxx/Documents/普通商密/自动化测试跟踪表示例/大屏3.0升级自动化输入表新.xlsx")
+    f = Factory()
+
+    webdata = [["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search", 'Pagination']],
+               ["设备管理", "设备保养", "设备单位", ["Add", "Modify", "Delete", "Search", 'Pagination']],
+               ["质量管理", "监督资料", ["Add", "Modify", "Delete"]]]
+
+    a = f.deconstruction(webdata)
+    f.mk_testcase("/Users/yangqing/Workspace/DEV/study/大屏3.0升级自动化输入表新.xlsx")

@@ -79,21 +79,20 @@ class Factory:
 
         return self.rows
 
-    def mk_testcase(self):
+    def mk_testcase(self, output_path):
         wb = Workbook()
         ws = wb.active
         ws.append(["大模块", "中模块", "小模块", "用例名称", "测试步骤", "期望结果"])
         for row in self.rows:
             ws.append(row)
 
-        wb.save("/Users/xxx/Documents/普通商密/自动化测试跟踪表示例/aaa.xlsx")
+        wb.save(output_path)
 
 
 if __name__ == '__main__':
     f = Factory()
 
-    webdata = [["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search"]],
-               ["质量管理", "破四口资料", ["Add", "Modify", "Delete"]]]
+    webdata = [["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search", ""]],
+               ["质量管理", "监督资料", ["Add", "Modify", "Delete"]]]
 
     a = f.deconstruction(webdata)
-    f.mk_testcase()
