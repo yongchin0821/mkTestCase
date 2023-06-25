@@ -6,6 +6,7 @@
 import yaml
 import copy
 from openpyxl import Workbook
+import string
 
 
 class Factory:
@@ -82,7 +83,12 @@ class Factory:
     def mk_testcase(self, output_path):
         wb = Workbook()
         ws = wb.active
-        ws.append(["大模块", "中模块", "小模块", "用例名称", "测试步骤", "期望结果"])
+        lowercase = string.ascii_lowercase
+        title_prefix = []
+        for i in range(self.m_count):
+            module_name = "模块" + lowercase[i]
+            title_prefix.append(module_name)
+        ws.append(title_prefix + ["用例名称", "测试步骤", "期望结果"])
         for row in self.rows:
             ws.append(row)
 
