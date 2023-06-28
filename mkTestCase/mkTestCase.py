@@ -7,6 +7,9 @@ import yaml
 import copy
 from openpyxl import Workbook
 import string
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class Factory:
@@ -16,7 +19,7 @@ class Factory:
         self.rows = []
 
     def load(self):
-        with open("testcases/form.yml") as f:
+        with open(os.path.join(BASE_DIR, "testcases/form.yml")) as f:
             ya = yaml.safe_load(f)
         result = ya["Add"]
         f.close()
@@ -41,13 +44,12 @@ class Factory:
         treeData = []
 
         for i in datas:
-
             if i in ["Add", "Modify", "Delete", "Search"]:
-                with open("testcases/form.yml") as f:
+                with open(os.path.join(BASE_DIR, "testcases/form.yml")) as f:
                     ya = yaml.safe_load(f)
 
             elif i in ["Pagination"]:
-                with open("testcases/page.yml") as f:
+                with open(os.path.join(BASE_DIR, "testcases/page.yml")) as f:
                     ya = yaml.safe_load(f)
 
             else:
