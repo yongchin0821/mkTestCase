@@ -1,29 +1,36 @@
 Add:
   - name: "新增"
+    identifies: "add1"
     step: "正常填写各项数据, 点击保存提交"
     expect: "新增成功"
 
 Delete:
   - name: "删除"
+    identifies: "del1"
     step: "选择要删除的数据, 点击删除按钮, 点击确定"
     expect: "数据删除成功,列表上没有展示该条数据, 数据库中该条数据已删除"
 
 Modify:
   - name: "修改"
+    identifies: "modify1"
     step: "1. 点击编辑按钮\n2. 正常填写各项数据, 点击保存提交"
     expect: "1. 数据正确回显到各个输入框中\n2. 编辑成功"
 
 Search:
   - name: "页面展示"
+    identifies: "search1"
     step: "数据核对"
     expect: "列表字段、状态展示正确。数据正确显示"
   - name: "查询"
+    identifies: "search2"
     step: "各个输入框输入正确数据, 点击查询"
     expect: "能模糊匹配查询出数据"
   - name: "查询"
+    identifies: "search3"
     step: "各个输入框和下拉框联合使用查询"
     expect: "能模糊匹配查询出数据"
   - name: "查询"
+    identifies: "search4"
     step: "各个输入框输入不存在的数据"
     expect: "列表数据展示为空"
 
