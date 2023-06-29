@@ -58,6 +58,7 @@ class Factory:
             result = ya[i]
             for j in result:
                 head = copy.deepcopy(self.model_index)
+                head.append(j["identifies"])
                 head.append(j["name"])
                 head.append(j["step"])
                 head.append(j["expect"])
@@ -80,7 +81,9 @@ class Factory:
         for data in datas:
             self.mk_row(data)
 
-        return self.rows
+        result = copy.deepcopy(self.rows)
+        self.rows = []
+        return result
 
     def mk_testcase(self, output_path):
         wb = Workbook()
@@ -90,7 +93,7 @@ class Factory:
         for i in range(self.m_count):
             module_name = "模块" + lowercase[i]
             title_prefix.append(module_name)
-        ws.append(title_prefix + ["用例名称", "测试步骤", "期望结果"])
+        ws.append(title_prefix + ["用例标识", "用例名称", "测试步骤", "期望结果"])
         for row in self.rows:
             ws.append(row)
 
