@@ -3,14 +3,16 @@
 # @Time    : 2023/3/6 10:59 AM
 # @Author  : Yongchin
 
-from mkTestCase import Factory
+from mkTestCase import generator
 
 if __name__ == '__main__':
-    f = Factory()
+    f = generator()
 
-    webdata = [["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search", 'Pagination']],
-               ["设备管理", "设备保养", "设备单位", ["Add", "Modify", "Delete", "Search", 'Pagination']],
-               ["质量管理", "监督资料", ["Add", "Modify", "Delete"]]]
+    case_group1 = ["系统管理-机构管理", ["Add", "Modify", "Delete", "Search", 'Pagination']]
+    case_group2 = ["系统管理-角色管理", ["Add", "Modify", "Delete", "Search", 'Pagination']]
+    case_group3 = ["系统管理-用户管理", ["Add", "Modify", "Delete", "Search", 'Pagination']]
 
-    a = f.deconstruction(webdata)
-    f.mk_testcase("/Users/yangqing/Workspace/DEV/study/大屏3.0升级自动化输入表新.xlsx")
+    prompt = [case_group1, case_group2, case_group3]
+
+    a = f.deconstruction(prompt)
+    f.mk_testcase("/path/to/your/xxx.xlsx")

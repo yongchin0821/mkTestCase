@@ -3,11 +3,12 @@
 # @Time    : 2023/3/6 10:55 AM
 # @Author  : Yongchin
 
-import yaml
 import copy
-from openpyxl import Workbook
-import string
 import os
+import string
+
+import yaml
+from openpyxl import Workbook
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -17,6 +18,40 @@ class Factory:
         self.m_count = 0
         self.model_index = []
         self.rows = []
+        self.yaml_map = []
+
+        self.init_yamlfiles()
+
+    def init_yamlfiles(self):
+        """初始化自带yml文件的信息"""
+        script_path = os.path.split(__file__)[0]
+        for root, _, files in os.walk(script_path):
+            for file in files:
+                if '.yml' in file:
+                    # 获取文件的完整路径
+                    file_path = os.path.join(root, file)
+                    # 输出文件路径
+                    with open(file_path) as f:
+                        ya = yaml.safe_load(f)
+                        data = {
+                            "name": file,
+                            "module": ya.keys(),
+                            "path": file_path
+                        }
+                        self.yaml_map.append(data)
+
+    def regist_yamlfile(self, file_path: str):
+        """注册yml文件的信息"""
+        filename = os.path.split(file_path)[1]
+        # 输出文件路径
+        with open(file_path) as f:
+            ya = yaml.safe_load(f)
+            data = {
+                "name": filename,
+                "module": ya.keys(),
+                "path": file_path
+            }
+            self.yaml_map.append(data)
 
     def load(self):
         with open(os.path.join(BASE_DIR, "testcases/form.yml")) as f:
@@ -43,19 +78,17 @@ class Factory:
     def contact(self, datas):
         treeData = []
 
-        for i in datas:
-            if i in ["Add", "Modify", "Delete", "Search"]:
-                with open(os.path.join(BASE_DIR, "testcases/form.yml")) as f:
-                    ya = yaml.safe_load(f)
-
-            elif i in ["Pagination"]:
-                with open(os.path.join(BASE_DIR, "testcases/page.yml")) as f:
-                    ya = yaml.safe_load(f)
-
-            else:
+        for module in datas:
+            for yml_info in self.yaml_map:
+                if module in yml_info["module"]:
+                    with open(yml_info["path"]) as f:
+                        ya = yaml.safe_load(f)
+                        f.close()
+                        break
+            if not ya:
                 raise IOError("模块在列表中不存在")
 
-            result = ya[i]
+            result = ya[module]
             for j in result:
                 head = copy.deepcopy(self.model_index)
                 head.append(j["identifies"])
@@ -63,8 +96,6 @@ class Factory:
                 head.append(j["step"])
                 head.append(j["expect"])
                 treeData.append(head)
-
-            f.close()
 
         return treeData
 
@@ -82,7 +113,7 @@ class Factory:
             self.mk_row(data)
 
         result = copy.deepcopy(self.rows)
-        self.rows = []
+
         return result
 
     def mk_testcase(self, output_path):
@@ -102,8 +133,9 @@ class Factory:
 
 if __name__ == '__main__':
     f = Factory()
-
-    webdata = [["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search", ""]],
-               ["质量管理", "监督资料", ["Add", "Modify", "Delete"]]]
+    f.regist_yamlfile('/demo/login.yml')
+    case_group1 = ["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search"]]
+    case_group2 = ["质量管理", "监督资料", ["Add", "Code"]]
+    webdata = [case_group1, case_group2]
 
     a = f.deconstruction(webdata)
