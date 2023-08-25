@@ -78,24 +78,36 @@ class Factory:
     def contact(self, datas):
         treeData = []
 
+        # 遍历功能点
         for module in datas:
+            # 遍历yaml文件
             for yml_info in self.yaml_map:
+                # 判断功能点是否在yaml文件里面
                 if module in yml_info["module"]:
                     with open(yml_info["path"]) as f:
                         ya = yaml.safe_load(f)
-                        f.close()
-                        break
-            if not ya:
-                raise IOError("模块在列表中不存在")
+                        result = ya[module]
+                        for j in result:
+                            head = copy.deepcopy(self.model_index)
+                            head.append(j["identifies"])
+                            head.append(j["name"])
+                            head.append(j["step"])
+                            head.append(j["expect"])
+                            treeData.append(head)
 
-            result = ya[module]
-            for j in result:
-                head = copy.deepcopy(self.model_index)
-                head.append(j["identifies"])
-                head.append(j["name"])
-                head.append(j["step"])
-                head.append(j["expect"])
-                treeData.append(head)
+                        f.close()
+                        # break
+            # if not ya:
+            #     raise IOError("模块在列表中不存在")
+
+            # result = ya[module]
+            # for j in result:
+            #     head = copy.deepcopy(self.model_index)
+            #     head.append(j["identifies"])
+            #     head.append(j["name"])
+            #     head.append(j["step"])
+            #     head.append(j["expect"])
+            #     treeData.append(head)
 
         return treeData
 
