@@ -14,5 +14,6 @@ if __name__ == '__main__':
 
     prompt = [case_group1, case_group2, case_group3]
 
+    f.regist_yamlfile('mkTestCase/testcases/delete.yml')
     a = f.deconstruction(prompt)
     f.mk_testcase("/path/to/your/xxx.xlsx")
