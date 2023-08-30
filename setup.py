@@ -11,7 +11,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="mkTestCase",
-    version="0.0.9",
+    version="0.1.0",
     author="Yongchin",
     author_email="yongchin39@qq.com",
     license="MIT",

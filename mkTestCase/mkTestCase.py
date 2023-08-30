@@ -40,6 +40,23 @@ class Factory:
                         }
                         self.yaml_map.append(data)
 
+    def regist_yamlfolder(self, folder_path: str):
+        """注册yml目录的信息"""
+        for root, _, files in os.walk(folder_path):
+            for file in files:
+                if '.yml' in file:
+                    # 获取文件的完整路径
+                    file_path = os.path.join(root, file)
+                    # 输出文件路径
+                    with open(file_path) as f:
+                        ya = yaml.safe_load(f)
+                        data = {
+                            "name": file,
+                            "module": ya.keys(),
+                            "path": file_path
+                        }
+                        self.yaml_map.append(data)
+
     def regist_yamlfile(self, file_path: str):
         """注册yml文件的信息"""
         filename = os.path.split(file_path)[1]
@@ -145,7 +162,8 @@ class Factory:
 
 if __name__ == '__main__':
     f = Factory()
-    f.regist_yamlfile('/demo/login.yml')
+    # f.regist_yamlfile('/demo/login.yml')
+    f.regist_yamlfolder('mkTestCase')
     case_group1 = ["设备管理", "设备保养", "保养工单", ["Add", "Modify", "Delete", "Search"]]
     case_group2 = ["质量管理", "监督资料", ["Add", "Code"]]
     webdata = [case_group1, case_group2]
