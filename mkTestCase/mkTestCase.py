@@ -143,6 +143,8 @@ class Factory:
 
         result = copy.deepcopy(self.rows)
 
+        # 完后需初始化为空，不然会污染后续解析
+        self.rows = []
         return result
 
     def mk_testcase(self, output_path):
